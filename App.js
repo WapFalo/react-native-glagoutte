@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import * as Location from 'expo-location';
 import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
@@ -64,11 +64,11 @@ export default function App() {
       const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${location.coords.latitude}&lon=${location.coords.longitude}&appid=8ba77e856b1563aa404795602d6c9abb&units=metric&lang=fr`;
       console.log("url2:",url)
       const json = await response.json();
-      setResponseSecondApi([json.city[0].name, json.list[0].main.temp, json.list[0].weather.description, json.list[0].weather.icon,
-                            json.list[1].main.temp, json.list[1].weather.description, json.list[1].weather.icon,
-                            json.list[2].main.temp, json.list[2].weather.description, json.list[2].weather.icon,
-                            json.list[3].main.temp, json.list[3].weather.description, json.list[3].weather.icon,
-                            json.list[4].main.temp, json.list[4].weather.description, json.list[4].weather.icon]);
+      setResponseSecondApi([json.city[0].name, json.list[0].main.temp, json.list[0].weather[0].description, json.list[0].weather[0].icon,
+                            json.list[1].main.temp, json.list[1].weather[0].description, json.list[1].weather[0].icon,
+                            json.list[2].main.temp, json.list[2].weather[0].description, json.list[2].weather[0].icon,
+                            json.list[3].main.temp, json.list[3].weather[0].description, json.list[3].weather[0].icon,
+                            json.list[4].main.temp, json.list[4].weather[0].description, json.list[4].weather[0].icon]);
       console.log("ResponseSecondApi:",responseSecondApi);
       console.log(json);
     } catch (error) {
@@ -78,50 +78,50 @@ export default function App() {
   
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.paragraph}>À {responseFirstApi[3]} il fera {responseFirstApi[0]} C° avec un temps {responseFirstApi[1]}</Text>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text contentContainerStyle={styles.paragraph}>À {responseFirstApi[3]} il fera {responseFirstApi[0]} C° avec un temps {responseFirstApi[1]}</Text>
       <Image
-        style={styles.image}
+        contentContainerStyle={styles.image}
         source={{
           uri: `https://openweathermap.org/img/wn/${responseFirstApi[2]}@2x.png`,
         }}
         />
-      <Text style={styles.paragraph}>À {responseSecondApi[0]} il fera {responseSecondApi[1]} C° avec un temps {responseSecondApi[2]}</Text>
+      <Text contentContainerStyle={styles.paragraph}>À {responseSecondApi[0]} il fera {responseSecondApi[1]} C° avec un temps {responseSecondApi[2]}</Text>
       <Image
-        style={styles.image}
+        contentContainerStyle={styles.image}
         source={{
           uri: `https://openweathermap.org/img/wn/${responseSecondApi[3]}@2x.png`,
         }}
         />
-      <Text style={styles.paragraph}>À {responseSecondApi[0]} il fera {responseSecondApi[4]} C° avec un temps {responseSecondApi[5]}</Text>
+      <Text contentContainerStyle={styles.paragraph}>À {responseSecondApi[0]} il fera {responseSecondApi[4]} C° avec un temps {responseSecondApi[5]}</Text>
       <Image
-        style={styles.image}
+        contentContainerStyle={styles.image}
         source={{
           uri: `https://openweathermap.org/img/wn/${responseSecondApi[6]}@2x.png`,
         }}
         />
-      <Text style={styles.paragraph}>À {responseSecondApi[0]} il fera {responseSecondApi[7]} C° avec un temps {responseSecondApi[8]}</Text>
+      <Text contentContainerStyle={styles.paragraph}>À {responseSecondApi[0]} il fera {responseSecondApi[7]} C° avec un temps {responseSecondApi[8]}</Text>
       <Image
-        style={styles.image}
+        contentContainerStyle={styles.image}
         source={{
           uri: `https://openweathermap.org/img/wn/${responseSecondApi[9]}@2x.png`,
         }}
         />
-      <Text style={styles.paragraph}>À {responseSecondApi[0]} il fera {responseSecondApi[10]} C° avec un temps {responseSecondApi[11]}</Text>
+      <Text contentContainerStyle={styles.paragraph}>À {responseSecondApi[0]} il fera {responseSecondApi[10]} C° avec un temps {responseSecondApi[11]}</Text>
       <Image
-        style={styles.image}
+        contentContainerStyle={styles.image}
         source={{
           uri: `https://openweathermap.org/img/wn/${responseSecondApi[12]}@2x.png`,
         }}
         />
-      <Text style={styles.paragraph}>À {responseSecondApi[0]} il fera {responseSecondApi[13]} C° avec un temps {responseSecondApi[14]}</Text>
+      <Text contentContainerStyle={styles.paragraph}>À {responseSecondApi[0]} il fera {responseSecondApi[13]} C° avec un temps {responseSecondApi[14]}</Text>
       <Image
-        style={styles.image}
+        contentContainerStyle={styles.image}
         source={{
           uri: `https://openweathermap.org/img/wn/${responseSecondApi[15]}@2x.png`,
         }}
         />
-    </View>
+    </ScrollView>
   );
 }
 
