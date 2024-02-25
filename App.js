@@ -9,7 +9,9 @@ export default function App() {
   const [errorMsg, setErrorMsg] = useState(null);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
-  const [responseApi, setResponseApi] = useState([]);
+  const [responseFirstApi, setResponseFirstApi] = useState([]);
+  const [responseSecondApi, setResponseSecondApi] = useState([]);
+
 
   useEffect(() => {
     (async () => {
@@ -25,6 +27,7 @@ export default function App() {
       setLongitude(location.coords.longitude);
       setLocation(location.coords);
       getTodayWeatherApiAsync(location);
+      getWeekWeatherApiAsync(location);
     })();
   }, []);
 
@@ -45,9 +48,29 @@ export default function App() {
       const url = `https://api.openweathermap.org/data/2.5/weather?lat=${location.coords.latitude}&lon=${location.coords.longitude}&appid=8ba77e856b1563aa404795602d6c9abb&units=metric&lang=fr`;
       console.log("url:",url)
       const json = await response.json();
-      setResponseApi([json.main.temp, json.weather[0].description, json.weather[0].icon, json.name]);
-      console.log("responseApi:",responseApi);
+      setResponseFirstApi([json.main.temp, json.weather[0].description, json.weather[0].icon, json.name]);
+      console.log("ResponseFirstApi:",responseFirstApi);
       console.log("json:", json);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getWeekWeatherApiAsync = async(location) => {
+    try {
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${location.coords.latitude}&lon=${location.coords.longitude}&appid=8ba77e856b1563aa404795602d6c9abb&units=metric&lang=fr`
+      );
+      const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${location.coords.latitude}&lon=${location.coords.longitude}&appid=8ba77e856b1563aa404795602d6c9abb&units=metric&lang=fr`;
+      console.log("url2:",url)
+      const json = await response.json();
+      setResponseSecondApi([json.city[0].name, json.list[0].main.temp, json.list[0].weather.description, json.list[0].weather.icon,
+                            json.list[1].main.temp, json.list[1].weather.description, json.list[1].weather.icon,
+                            json.list[2].main.temp, json.list[2].weather.description, json.list[2].weather.icon,
+                            json.list[3].main.temp, json.list[3].weather.description, json.list[3].weather.icon,
+                            json.list[4].main.temp, json.list[4].weather.description, json.list[4].weather.icon]);
+      console.log("ResponseSecondApi:",responseSecondApi);
+      console.log(json);
     } catch (error) {
       console.error(error);
     }
@@ -56,11 +79,46 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.paragraph}>À {responseApi[3]} il fera {responseApi[0]} C° avec un temps {responseApi[1]}</Text>
+      <Text style={styles.paragraph}>À {responseFirstApi[3]} il fera {responseFirstApi[0]} C° avec un temps {responseFirstApi[1]}</Text>
       <Image
         style={styles.image}
         source={{
-          uri: `https://openweathermap.org/img/wn/${responseApi[2]}@2x.png`,
+          uri: `https://openweathermap.org/img/wn/${responseFirstApi[2]}@2x.png`,
+        }}
+        />
+      <Text style={styles.paragraph}>À {responseSecondApi[0]} il fera {responseSecondApi[1]} C° avec un temps {responseSecondApi[2]}</Text>
+      <Image
+        style={styles.image}
+        source={{
+          uri: `https://openweathermap.org/img/wn/${responseSecondApi[3]}@2x.png`,
+        }}
+        />
+      <Text style={styles.paragraph}>À {responseSecondApi[0]} il fera {responseSecondApi[4]} C° avec un temps {responseSecondApi[5]}</Text>
+      <Image
+        style={styles.image}
+        source={{
+          uri: `https://openweathermap.org/img/wn/${responseSecondApi[6]}@2x.png`,
+        }}
+        />
+      <Text style={styles.paragraph}>À {responseSecondApi[0]} il fera {responseSecondApi[7]} C° avec un temps {responseSecondApi[8]}</Text>
+      <Image
+        style={styles.image}
+        source={{
+          uri: `https://openweathermap.org/img/wn/${responseSecondApi[9]}@2x.png`,
+        }}
+        />
+      <Text style={styles.paragraph}>À {responseSecondApi[0]} il fera {responseSecondApi[10]} C° avec un temps {responseSecondApi[11]}</Text>
+      <Image
+        style={styles.image}
+        source={{
+          uri: `https://openweathermap.org/img/wn/${responseSecondApi[12]}@2x.png`,
+        }}
+        />
+      <Text style={styles.paragraph}>À {responseSecondApi[0]} il fera {responseSecondApi[13]} C° avec un temps {responseSecondApi[14]}</Text>
+      <Image
+        style={styles.image}
+        source={{
+          uri: `https://openweathermap.org/img/wn/${responseSecondApi[15]}@2x.png`,
         }}
         />
     </View>
